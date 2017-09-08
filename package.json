@@ -7,7 +7,9 @@
     "testmigrate": "NODE_ENV=test sequelize db:migrate",
     "testundomigrate": "NODE_ENV=test sequelize db:migrate:undo",
     "stage-stop": "forever stopall",
-    "stage": "NODE_ENV=development PORT=80 forever start -c 'babel-node' bin/www.js"
+    "stage": "NODE_ENV=development PORT=80 forever start -c 'babel-node' bin/www.js",
+    "migrate": "NODE_ENV=development sequelize db:migrate",
+    "undomigrate": "NODE_ENV=development sequelize db:migrate:undo"
   },
   "dependencies": {
     "body-parser": "~1.16.0",
