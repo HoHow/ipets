@@ -32,7 +32,7 @@ module.exports = {
     return hospital
   },
   getAllHospital(query){
-    if(query !== ''){
+    if(query === ''){
       return this.hospital().findAll({where:{area:query}})
     }else{
       return this.hospital().findAll()
