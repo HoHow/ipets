@@ -14,7 +14,7 @@ class animal{
       
       //驗證area
       const schema = joi.object().keys({
-        area: joi.string().regex(/^[\u4e00-\u9fa5]+$/).error((err) => { isarea(err) }),
+        area: joi.string().regex(/^[\u4e00-\u9fa5]+$/).allow('').error((err) => { isarea(err) }),
       })
       joi.validate({area:queryObject.area},schema)
      
