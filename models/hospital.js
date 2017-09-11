@@ -31,12 +31,18 @@ module.exports = {
     });
     return hospital
   },
-  getAllHospital(query){
-    if(query === ''){
-      return this.hospital().findAll({where:{area:query}})
-    }else{
-      return this.hospital().findAll()
+  getAllHospital({area,name,page,setPage}){
+
+    //收尋店名
+    if(name !== undefined){
+      return this.hospital().findAll({where:{name:{$like:'%'+name+'%'}},limit:setPage,offset:setPage*page})
     }
+    //收尋地區
+    if(area !== undefined){
+      return this.hospital().findAll({where:{area:area},limit:setPage,offset:setPage*page})
+    }
+    //預設
+    return this.hospital().findAll({limit:setPage,offset:setPage*page})
     
   }
 }
