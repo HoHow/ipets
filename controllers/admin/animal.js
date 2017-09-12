@@ -1,32 +1,8 @@
-var sequelize = require('../config/db_config');
-var helper = require('./helper');
-var model = require('../models/hospital');
+var sequelize = require('../../config/db_config');
+var helper = require('../helper');
+var model = require('../../models/hospital');
 var joi = require('joi');
 class animal{
-  //get /api/v1/animalhospital?page=&area=&name=
-  async getAllHospital(req, res, next){
-    try{
-      //頁碼設定
-      const setPage = 10;
-      //area query
-      var queryObject = Object.assign({},req.query);
-      queryObject.setPage = setPage;
-      
-      //驗證area
-      const schema = joi.object().keys({
-        area: joi.string().regex(/^[\u4e00-\u9fa5]+$/).allow('').error((err) => { isarea(err) }),
-      });
-      joi.validate({area:queryObject.area},schema);
-     
-      //連接資料庫
-      var hospitalRows = await model.getAllHospital(queryObject);
-      
-      //回傳json
-      res.json({status:1,data:hospitalRows});
-    }catch(error){
-      next(error);
-    }
-  }
 
   //post /api/v1/animalhospital
   async postHospital(req, res, next){
@@ -42,7 +18,7 @@ class animal{
       joi.validate({area:bodyObject.area,name:bodyObject.name,address:bodyObject.address,number:bodyObject.number},schema);
       
       await model.postSingleHospital(bodyObject);
-      
+
       //回傳json
       res.json({status:1,message:'上傳成功'});
     }catch(error){

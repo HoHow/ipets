@@ -15,7 +15,8 @@ module.exports = {
       },
       name:{
         type:Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
       },
       address:{
         type:Sequelize.STRING,
@@ -32,19 +33,18 @@ module.exports = {
     return hospital
   },
   getAllHospital({area,name,page,setPage}){
-    console.log(area)
     //收尋店名,收尋地區
     if(name !== undefined || area !== undefined){
       return this.hospital().findAll({where:{area:{$like:'%'+area+'%'},name:{$like:'%'+name+'%'}},limit:setPage,offset:setPage*page})
     }
-    
-    
-    // if(area !== undefined ){
-    //   return this.hospital().findAll({where:{area:{$like:'%'+area+'%'},ame:{$like:'%'+name+'%'}},limit:setPage,offset:setPage*page})
-    // }
     //預設
     return this.hospital().findAll({limit:setPage,offset:setPage*page})
     
+  },
+  postSingleHospital({area,name,address,number}){
+    return this.hospital().create({name:name,address:address,number:number,area:area}).catch(Sequelize.ValidationError, function (err) {
+      throw new Error('店家名稱重覆')
+    });
   }
 }
 

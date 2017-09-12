@@ -5,9 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var index = require('./routes/index');
-var users = require('./routes/users');
-var api = require('./routes/api')
+var adminapi = require('./routes/admin/adminapi');
+var api = require('./routes/api');
 var app = express();
 
 // view engine setup
@@ -26,13 +25,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Add headers
 app.use(function (req, res, next) {
   // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Origin', 'http://13.114.3.214/')
 
   // Request methods you wish to allow
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
 
   // Request headers you wish to allow
-  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, x-access-token')
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
 
   // Set to true if you need the website to include cookies in the requests sent
   // to the API (e.g. in case you use sessions)
@@ -42,14 +41,15 @@ app.use(function (req, res, next) {
   next()
 })
 
-app.use('/', index);
-app.use('/users', users);
+/*前端 */
 app.use('/api/v1/',api);
+/*後端 */
+app.use('/adminapi/v1/',adminapi);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   //var err = new Error('Not Found');
   //err.status = 404;
-  res.json({status:0,message:'Not Found'})
+  res.json({status:0,message:'API Not Found'})
   next(err);
 });
 
