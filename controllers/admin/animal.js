@@ -26,6 +26,29 @@ class animal{
     }
   }
   //putHospital
+  async updateHospital(req, res, next){
+    try{
+      var hid = req.params.id
+      var bodyObject = Object.assign({}, req.body);
+      bodyObject.id = hid;
+
+      const schema = joi.object().keys({
+        area: joi.string().regex(/^[\u4e00-\u9fa5]+$/).error((err) => { isarea(err) }),
+        name: joi.string().regex(/^[\u4e00-\u9fa5_a-zA-Z0-9_\s]+$/).min(1).max(20).error((err) => { isname(err) }),
+        address: joi.string().error((err) => { isaddress(err) }),
+        number: joi.string().regex(/^[0-9]{2}[\-]\d+$/).error((err) => { isnumber(err) }),
+      });
+      joi.validate({area:bodyObject.area,name:bodyObject.name,address:bodyObject.address,number:bodyObject.number},schema);
+
+      //資料庫
+      await model.updateSingleHospital(bodyObject);
+
+      //回傳json
+      res.json({status:1,message:'上傳成功'});
+    }catch(error){
+      next(error)
+    }
+  }
   //deleteHospital
 }
 

@@ -7,5 +7,6 @@ var animalObject = new animalController()
 router.post('/', animalObject.postHospital);
 //待建立
 //put 更新動物醫院
+router.put('/:id', animalObject.updateHospital);
 //delete 刪除動物醫院
 module.exports = router;
