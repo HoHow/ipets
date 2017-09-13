@@ -9,4 +9,5 @@ router.post('/', animalObject.postHospital);
 //put 更新動物醫院
 router.put('/:id', animalObject.updateHospital);
 //delete 刪除動物醫院
+router.delete('/:id',animalObject.deleteHopspital)
 module.exports = router;

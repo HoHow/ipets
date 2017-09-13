@@ -20,7 +20,7 @@ class animal{
       await model.postSingleHospital(bodyObject);
 
       //回傳json
-      res.json({status:1,message:'上傳成功'});
+      res.json({status:1,message:'新增成功'});
     }catch(error){
       next(error);
     }
@@ -28,7 +28,7 @@ class animal{
   //putHospital
   async updateHospital(req, res, next){
     try{
-      var hid = req.params.id
+      var hid = req.params.id;
       var bodyObject = Object.assign({}, req.body);
       bodyObject.id = hid;
 
@@ -44,12 +44,21 @@ class animal{
       await model.updateSingleHospital(bodyObject);
 
       //回傳json
-      res.json({status:1,message:'上傳成功'});
+      res.json({status:1,message:'更新成功'});
     }catch(error){
       next(error)
     }
   }
   //deleteHospital
+  async deleteHopspital(req, res, next){
+    try{
+      var hid = req.params.id;
+      await model.deleteSingleHospital(hid)
+      res.json({status:1,message:'刪除成功'})
+    }catch(error){
+      next(error)
+    }
+  }
 }
 
 //判斷地區

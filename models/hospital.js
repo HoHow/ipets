@@ -46,9 +46,10 @@ module.exports = {
     });
   },
   updateSingleHospital({id, area, name, address, number}){
-    
     return this.hospital().update({area:area,address:address,name:name,number:number},{where:{id:id}});
-    
+  },
+  deleteSingleHospital(id){
+    return this.hospital().destroy({where:{id:id}})
   }
 }
 
