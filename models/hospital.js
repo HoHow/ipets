@@ -31,13 +31,14 @@ module.exports = {
     });
     return hospital;
   },
-  getAllHospital({area,name,page,setPage}){
+  getAllHospital(query){
     //收尋店名,收尋地區
-    if(name !== undefined || area !== undefined){
-      return this.hospital().findAll({where:{area:{$like:'%'+area+'%'},name:{$like:'%'+name+'%'}},limit:setPage,offset:setPage*page});
-    }
-    //預設
-    return this.hospital().findAll({limit:setPage,offset:setPage*page});
+    var objquery = checkquery(query);
+    console.log(objquery)
+    var setPage = parseInt(query.setPage);
+    var page = parseInt(query.page);
+   
+    return this.hospital().findAll({where:objquery,limit:setPage,offset:setPage*page});
     
   },
   postSingleHospital({area,name,address,number}){
@@ -53,6 +54,17 @@ module.exports = {
   }
 }
 
+function checkquery({area,name,page,setPage}){
+  let obj = {};
+  if(name !== ''){
+    obj.name = name;
+  }
+  if(area !== ''){
+    obj.area = area;
+  }
+
+  return obj
+}
 
 
 

@@ -9,9 +9,13 @@ class animal{
     try{
       //頁碼設定
       const setPage = 10;
-      //area query
-      var queryObject = Object.assign({},req.query);
-      queryObject.setPage = setPage;
+      //area name
+      var queryObject = {
+        area: req.query.area || '',
+        name: req.query.name || '',
+        page: req.query.page || 0,
+        setPage: setPage
+      }
       
       //驗證area
       const schema = joi.object().keys({
