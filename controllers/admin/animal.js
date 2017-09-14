@@ -2,6 +2,7 @@ var sequelize = require('../../config/db_config');
 var helper = require('../helper');
 var model = require('../../models/hospital');
 var joi = require('joi');
+
 class animal{
 
   //post /api/v1/animalhospital
@@ -20,7 +21,7 @@ class animal{
       await model.postSingleHospital(bodyObject);
 
       //回傳json
-      res.json({status:1,message:'新增成功'});
+      res.json({status:1,message:'新增成功'});      
     }catch(error){
       next(error);
     }

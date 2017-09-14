@@ -9,7 +9,9 @@
     "stage-stop": "forever stopall",
     "stage": "NODE_ENV=development PORT=80 forever start -c 'babel-node' bin/www.js",
     "migrate": "NODE_ENV=development sequelize db:migrate",
-    "undomigrate": "NODE_ENV=development sequelize db:migrate:undo"
+    "undomigrate": "NODE_ENV=development sequelize db:migrate:undo",
+    "cron-start": "NODE_ENV=development forever start ./cron.js",
+    "testcron-start": "NODE_ENV=test forever start ./cron.js"
   },
   "dependencies": {
     "body-parser": "~1.16.0",
