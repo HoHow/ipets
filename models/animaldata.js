@@ -84,7 +84,34 @@ var animalMethod = {
       shelter_name:element.shelter_name,album_file:element.album_file,shelter_address:element.shelter_address,
       shelter_tel:element.shelter_tel});
     })
+  },
+  getAllAnimalData:(query)=>{
+   
+    var obj = checkquery(query);
+
+    return animalMethod.animalData().findAll({where:obj});
   }
+}
+
+function checkquery({kind,shelter_name,sex,bodytype,age}){
+  var obj = {};
+  
+  if(kind !== ''){
+    obj.kind = kind;
+  }
+  if(shelter_name !== ''){
+    obj.shelter_name = shelter_name;
+  }
+  if(sex !== ''){
+    obj.sex = sex;
+  }
+  if(bodytype !== ''){
+    obj.bodytype = bodytype;
+  }
+  if(age !== ''){
+    obj.age = age;
+  }
+  return obj
 }
 
 module.exports = animalMethod;

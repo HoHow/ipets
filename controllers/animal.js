@@ -1,6 +1,7 @@
 var sequelize = require('../config/db_config');
 var helper = require('./helper');
 var model = require('../models/hospital');
+var animalModel = require('../models/animaldata');
 var joi = require('joi');
 class animal{
   //get /api/v1/animalhospital?page=&area=&name=
@@ -27,30 +28,23 @@ class animal{
       next(error);
     }
   }
-
-  //post /api/v1/animalhospital
-  async postHospital(req, res, next){
+  //get /api/v1/animaldata?kind=&shelter_name=&sex=&bodytype=&age=
+  async getAllAnimalData(req, res, next){
     try{
-      var bodyObject = Object.assign({},req.body);
-      //資料庫處理
-      const schema = joi.object().keys({
-        area: joi.string().regex(/^[\u4e00-\u9fa5]+$/).error((err) => { isarea(err) }),
-        name: joi.string().regex(/^[\u4e00-\u9fa5_a-zA-Z0-9_\s]+$/).min(1).max(20).error((err) => { isname(err) }),
-        address: joi.string().error((err) => { isaddress(err) }),
-        number: joi.string().regex(/^[0-9]{2}[\-]\d+$/).error((err) => { isnumber(err) }),
-      });
-      joi.validate({area:bodyObject.area,name:bodyObject.name,address:bodyObject.address,number:bodyObject.number},schema);
       
-      await model.postSingleHospital(bodyObject);
-      
-      //回傳json
-      res.json({status:1,message:'上傳成功'});
+      var query = {
+        kind: req.query.kind || '',
+        shelter_name: req.query.shelter_name || '',
+        bodytype: req.query.bodytype || '',
+        sex: req.query.sex || '',
+        age: req.query.age || ''
+      }
+      var dataRows = await animalModel.getAllAnimalData(query);
+      res.json({status:1,data:dataRows});
     }catch(error){
       next(error);
     }
   }
-  //putHospital
-  //deleteHospital
 }
 
 //判斷地區
