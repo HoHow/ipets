@@ -77,6 +77,7 @@ var animalMethod = {
     return data;
   },
   addAnimalData:(obj)=>{
+    animalMethod.animalData().destroy();
     obj.forEach((element)=>{
       animalMethod.animalData().create({place: element.animal_place,kind:element.animal_kind
       ,sex:element.animal_sex,bodytype:element.animal_bodytype,color:element.animal_colour
