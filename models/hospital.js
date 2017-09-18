@@ -34,11 +34,10 @@ module.exports = {
   getAllHospital(query){
     //收尋店名,收尋地區
     var objquery = checkquery(query);
-    console.log(objquery)
     var setPage = parseInt(query.setPage);
     var page = parseInt(query.page);
    
-    return this.hospital().findAll({where:objquery,limit:setPage,offset:setPage*page});
+    return this.hospital().findAll({where:{name:{$like:'%'+ objquery.name +'%'},area:objquery.area},limit:setPage,offset:setPage*page,});
     
   },
   postSingleHospital({area,name,address,number}){
