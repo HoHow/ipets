@@ -36,9 +36,9 @@ module.exports = {
     var objquery = checkquery(query);
     var setPage = parseInt(query.setPage);
     var page = parseInt(query.page);
-   
-    return this.hospital().findAll({where:{name:{$like:'%'+ objquery.name +'%'},area:objquery.area},limit:setPage,offset:setPage*page,});
-    
+    console.log(objquery)
+    return this.hospital().findAll({where:objquery,limit:setPage,offset:setPage*page,});
+    //{name:{$like:'%'+ objquery.name +'%'},area:objquery.area}
   },
   postSingleHospital({area,name,address,number}){
     return this.hospital().create({name:name,address:address,number:number,area:area}).catch(Sequelize.ValidationError, function (err) {
@@ -56,12 +56,12 @@ module.exports = {
 function checkquery({area,name,page,setPage}){
   let obj = {};
   if(name !== ''){
-    obj.name = name;
+    obj.name = {$like:'%'+ name +'%'};
   }
   if(area !== ''){
     obj.area = area;
   }
-
+  //console.log(obj)
   return obj
 }
 
